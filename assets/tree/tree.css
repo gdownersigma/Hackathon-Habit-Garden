@@ -1,0 +1,45 @@
+.tree {
+      position: relative;
+      left: 500px;
+      top: 150px;
+    }
+.trunk {
+      width: 40px;
+      height: 150px;
+      background: linear-gradient(90deg, #5D4037, #8B5A2B, #5D4037);
+      border-radius: 5px;
+      position: relative;
+    }
+.canopy {
+      position: absolute;
+      transform-origin: bottom center;
+      animation: sway 4s ease-in-out infinite;
+}
+
+.base-leaf {
+      position: absolute;
+      left: -40px;
+      top: -90px;
+      width: 120px;
+      height: 150px;
+      background: radial-gradient(circle at 80% 80%, #3CB371, #228B22, #1B5E20);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+
+.upper-leaf {
+      position: absolute;
+      left: -25px;
+      top: -120px;
+      width: 90px;
+      height: 100px;
+      background: radial-gradient(circle at 80% 80%, #3CB371, #228B22, #1B5E20);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+@keyframes sway {
+      50%, 100% {
+        transform: rotate(-2deg);
+      }
+      50% {
+        transform: rotate(2deg);
+      }
+    }
