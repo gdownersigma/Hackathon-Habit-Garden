@@ -36,6 +36,7 @@
             transform: rotate(155deg);
             top: 42px;
             left: -20px;
+            animation: float 3s ease-in-out infinite;
         }
 
         #petal4 {
@@ -54,6 +55,7 @@
             transform: rotate(30deg);
             top: 45px;
             left: 25px;
+            animation: float 3s ease-in-out infinite
         }
 
         #petal7 {
@@ -66,6 +68,7 @@
             transform: rotate(0deg);
             top: 30px;
             left: 30px;
+            animation: float 3s ease-in-out infinite;
         }
 
         #petal9 {
@@ -90,6 +93,12 @@
             transform: rotate(180deg);
             top: 25px;
             left: -25px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: rotate(0deg);}
+            50% { transform: rotate(-40deg);}
+            100% { transform: rotate(0deg);}
         }
 
         #centre {
@@ -128,6 +137,7 @@
             transform: rotate(45deg);
             top: 120px;
             left: 0px;
+            animation: float 3s ease-in-out infinite;
         }
 
         #leaf3 {
@@ -146,6 +156,12 @@
             transform: rotate(-20deg);
             top: 190px;
             left: 40px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float{
+            0% { transform: rotate(0deg);}
+            50% { transform: rotate(-10deg);}
+            100% { transform: rotate(0deg);}
         }
 
         #soil {
@@ -173,7 +189,7 @@
             left: 50px;
             width: 100px;
         }
-    </style>
+ </style>
 </head>
 
 <body>
