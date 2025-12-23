@@ -61,14 +61,24 @@ def get_habits(user_id):
     return [dict(habit) for habit in habits], 200
 
 
-@bp.route('/score', methods=('',))
-def login():
+@bp.route('/score', methods=('GET',))
+def score():
+    """returns score on integer scale of 0 to 7"""
     if request.method == "GET":
         user_id = request.args.get("user_id", None)
         habit_id = request.args.get("habit_id", None)
+        frequency = request.args.get("freq", type=int, default=None)
+        if not (user_id and habit_id and frequency):
+            return {"error": "missing url parameter, need user_id, habit_id and freq"}, 400
         db = get_db()
-        user = db.execute(
-            'SELECT COUNT(habit_log_id) as num FROM habit_log WHERE user_id = ? AND habit_id = ? AND date_practiced >= date("now", "-7 days") ',
-            (user_id, habit_id)
-        ).fetchone()
-        return {"score": user["num"]}, 200
+        try:
+            user = db.execute(
+                'SELECT COUNT(habit_log_id) as num FROM habit_log WHERE user_id = ? AND habit_id = ? AND date_practiced >= date("now", "-7 days") ',
+                (user_id, habit_id)
+            ).fetchone()
+        except Exception as exc:
+            return {"error": str(exc)}
+        score = int(7 * user["num"]/frequency)
+        if score >= 7:
+            score = 7
+        return {"score": score}, 200
