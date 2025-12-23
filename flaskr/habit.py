@@ -31,26 +31,19 @@ def add_habit():
 
 @bp.route('/log', methods=('POST',))
 def log_habit():
-    """Takes json {"habit_name": "x", "user_id": y, "date_practiced": "YYYY-MM-DD"}"""
+    """Takes json {"habit_id": x, "user_id": y, "date_practiced": "YYYY-MM-DD"}"""
     if request.method == 'POST':
         payload = request.json
-        if not (payload.get("habit_name", False)
+        if not (payload.get("habit_id", False)
                 and payload.get("user_id", False)
                 and payload.get("date_practiced", False)):
             return {"error": "missing data"}, 400
         db = get_db()
-        habit_info = db.execute(
-            "SELECT habit_id FROM habit WHERE user_id = ? AND habit_name = ?",
-            (payload.get("user_id"), payload.get("habit_name"))
-        ).fetchone()
-        try:
-            habit_id = habit_info["habit_id"]
-        except TypeError:
-            return {"error": "No habit found with that user_id and habit_name"}, 400
         try:
             db.execute(
                 "INSERT INTO habit_log (habit_id, user_id, date_practiced) VALUES (?, ?, ?)",
-                (habit_id, payload.get("user_id"), payload.get("date_practiced"))
+                (payload.get("habit_id"), payload.get(
+                    "user_id"), payload.get("date_practiced"))
             )
             db.commit()
         except Exception as exc:
@@ -68,14 +61,14 @@ def get_habits(user_id):
     return [dict(habit) for habit in habits], 200
 
 
-# @bp.route('/score', methods=('',))
-# def login():
-#     if request.method == "GET":
-#         user_id = request.args.get("user_id", None)
-#         habit_id = request.args.get("habit_id", None)
-#         db = get_db()
-#         user = db.execute(
-#             'SELECT COUNT(habit_log_id) as num FROM habit_log WHERE user_id = ? AND habit_id = ? AND date_practiced >= date("now", "-7 days") ',
-#             (user_id, habit_id)
-#         ).fetchone()
-#         return {"score": user["num"]}, 200
+@bp.route('/score', methods=('',))
+def login():
+    if request.method == "GET":
+        user_id = request.args.get("user_id", None)
+        habit_id = request.args.get("habit_id", None)
+        db = get_db()
+        user = db.execute(
+            'SELECT COUNT(habit_log_id) as num FROM habit_log WHERE user_id = ? AND habit_id = ? AND date_practiced >= date("now", "-7 days") ',
+            (user_id, habit_id)
+        ).fetchone()
+        return {"score": user["num"]}, 200
