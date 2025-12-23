@@ -25,44 +25,57 @@ def add_habit():
             ).fetchone()
             db.commit()
         except db.IntegrityError:
-            return {"error": "habit already exists"}, 400
+            return {"error": "habit already exists or user_id is wrong"}, 400
     return dict(new_habit), 200
 
 
-# @bp.route('/log', methods=('POST',))
-# def log_habit():
-#     """Takes json {"habit_name": "x", "user_id": y, "date_practiced": "YYYY-MM-DD"}"""
-#     if request.method == 'POST':
-#         payload = request.json
-#         if not (payload.get("habit_name", False)
-#                 and payload.get("user_id", False)
-#                 and payload.get("date_practiced", False)):
-#             return {"error": "missing data"}, 400
-#         db = get_db()
-#         habit_info = db.execute(
+@bp.route('/log', methods=('POST',))
+def log_habit():
+    """Takes json {"habit_name": "x", "user_id": y, "date_practiced": "YYYY-MM-DD"}"""
+    if request.method == 'POST':
+        payload = request.json
+        if not (payload.get("habit_name", False)
+                and payload.get("user_id", False)
+                and payload.get("date_practiced", False)):
+            return {"error": "missing data"}, 400
+        db = get_db()
+        habit_info = db.execute(
+            "SELECT habit_id FROM habit WHERE user_id = ? AND habit_name = ?",
+            (payload.get("user_id"), payload.get("habit_name"))
+        ).fetchone()
+        try:
+            habit_id = habit_info["habit_id"]
+        except TypeError:
+            return {"error": "No habit found with that user_id and habit_name"}, 400
+        try:
+            db.execute(
+                "INSERT INTO habit_log (habit_id, user_id, date_practiced) VALUES (?, ?, ?)",
+                (habit_id, payload.get("user_id"), payload.get("date_practiced"))
+            )
+            db.commit()
+        except Exception as exc:
+            return {"error": str(exc)}, 400
+    return {"message": "success"}, 200
 
-#         )
-#         try:
-#             db.execute(
-#                 "INSERT INTO habit_log (habit_name, frequency, user_id) VALUES (?, ?, ?)",
-#                 (payload.get("habit_name"), payload.get(
-#                     "frequency"), payload.get("user_id"))
-#             )
-#             db.commit()
-#         except db.IntegrityError:
-#             return {"error": "habit already exists"}, 400
-#     return {"message": "success"}, 200
+
+@bp.route('/<int:user_id>')
+def get_habits(user_id):
+    db = get_db()
+    habits = db.execute(
+        "SELECT habit_id, habit_name, frequency FROM habit WHERE user_id = ?",
+        (user_id,)
+    ).fetchall()
+    return [dict(habit) for habit in habits], 200
 
 
-# @bp.route('/log', methods=('',))
+# @bp.route('/score', methods=('',))
 # def login():
 #     if request.method == "GET":
-#         payload = request.json
-#         if not payload.get("username", False):
-#             return {"error": "No username received."}, 400
+#         user_id = request.args.get("user_id", None)
+#         habit_id = request.args.get("habit_id", None)
 #         db = get_db()
 #         user = db.execute(
-#             'SELECT user_id FROM user_info WHERE username = ?',
-#             (payload.get("username"),)
+#             'SELECT COUNT(habit_log_id) as num FROM habit_log WHERE user_id = ? AND habit_id = ? AND date_practiced >= date("now", "-7 days") ',
+#             (user_id, habit_id)
 #         ).fetchone()
-#         return {"user_id": user["user_id"]}, 200
+#         return {"score": user["num"]}, 200
