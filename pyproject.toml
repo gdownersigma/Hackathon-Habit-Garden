@@ -1,0 +1,12 @@
+[project]
+name = "flaskr"
+version = "1.0.0"
+description = "API for habit logging"
+dependencies = [
+    "flask",
+    "flask_cors"
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
