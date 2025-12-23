@@ -420,3 +420,155 @@ html, body {
 .modal-footer .btn-success:hover {
     background: #3d6b4f;
 }
+#plantWrapper {
+    position: absolute;
+    bottom: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#plantContainer {
+    /* Remove position: absolute and the left/transform from this */
+}
+
+#plantContainer img {
+    width: 300px;
+    height: 400px;
+    border: none;
+    background: transparent;
+}
+
+#habitTitle {
+    /* Remove position: absolute and the left/transform from this */
+    margin-left: 2%;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #5a9b6b 0%, #3d6b4f 100%);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(61, 107, 79, 0.4);
+}
+
+#logHabitBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 10%;
+    transform: translateX(-50%);
+    padding: 15px 50px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 9999;
+    background: linear-gradient(135deg, #d6796b 0%, #ba2e1c 100%);
+    box-shadow: 0 8px 20px rgba(74, 124, 155, 0.4);
+    pointer-events: auto;
+}
+
+#logHabitBtn:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 12px 28px rgba(74, 124, 155, 0.5);
+}
+#logHabitModal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10050 !important;
+}
+
+#logHabitModal.show {
+    display: flex !important;
+}
+#logHabitModal .modal-dialog {
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    background: white;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 90%;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+#logHabitModal .modal-header {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+#logHabitModal .modal-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2e5a3c;
+}
+
+#logHabitModal .modal-body label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#logHabitModal .modal-body input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+}
+
+#logHabitModal .modal-body input:focus {
+    outline: none;
+    border-color: #4a7c59;
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.2);
+}
+
+#logHabitModal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+#logHabitModal .btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+#logHabitModal .btn-success {
+    background: #4a7c59;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+#logHabitModal .btn-success:hover {
+    background: #3d6b4f;
+}

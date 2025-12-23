@@ -113,6 +113,10 @@
 
     <!-- Ground/Grass -->
     <div class="ground">
+        <div id="plantWrapper">
+            <div id="plantContainer"></div>
+            <div id="habitTitle"></div>
+        </div>
         <div class="grass grass1"></div>
         <div class="grass grass9"></div>
         <div class="grass grass2"></div>
@@ -140,6 +144,7 @@
     </svg>
 
     <button id="addHabitBtn" class="btn btn-garden btn-lg hidden">Add Habit</button>
+    <button id="logHabitBtn" class="btn btn-lg hidden">Log Activity</button>
     <!-- Add Habit Modal -->
     <div class="modal fade" id="addHabitModal" tabindex="-1" aria-labelledby="addHabitModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -169,6 +174,26 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-success" id="submitHabitBtn">Create Habit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Log Habit Modal -->
+    <div class="modal fade" id="logHabitModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">📅 Log Activity</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="datePicker" class="form-label">When did you complete this habit?</label>
+                        <input type="date" class="form-control" id="datePicker">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="submitLogBtn">Log It!</button>
                 </div>
             </div>
         </div>

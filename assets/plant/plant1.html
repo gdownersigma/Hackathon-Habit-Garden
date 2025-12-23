@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>plant1</title>
     <style>
         #stem {
             position: absolute;
             width: 10px;
-            height: 30px;
+            height: 70px;
             background-image: linear-gradient(rgb(34, 139, 34), rgb(0, 100, 0));
-            TOP: 550px;
+            TOP: 530px;
             left: 700px;
             border-radius: 10px;
+        }
+        #leaves {
+            position: absolute;
+            TOP: 300px;
+            left: 660px;
+        }
+        .leaves {
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            background-image: radial-gradient(rgb(34, 139, 34), rgb(0, 100, 0));
+            border-radius: 50% 50% 50%  50%;
+        }
+        #leaf2 {
+            transform: rotate(20deg);
+            top: 250px;
+            left: 0px;
         }
         #soil {
             position: absolute;
@@ -36,11 +53,16 @@
             left: 50px;
             width: 100px;
         }
+
+
     </style>
 </head>
 <body>
     <div id="stem"></div>
-     <div id="soil">
+        <div id="leaves">
+        <div id="leaf2" class="leaves"></div>
+    </div>
+    <div id="soil">
         <div id="dirt3" class="dirt"></div>
         <div id="dirt1" class="dirt"></div>
         <div id="dirt2" class="dirt"></div>

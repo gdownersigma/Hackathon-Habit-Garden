@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>plant1</title>
     <style>
+        #flower {
+            position: absolute;
+            TOP: 350px;
+            left: 680px;
+        }
+        .flower {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background-image: radial-gradient(rgb(255, 192, 203), rgb(255, 105, 180));
+            border-radius: 50%;
+        }
+        #centre {
+            width: 35px;
+            height: 35px;
+            background-image: radial-gradient(rgb(255, 215, 0), rgb(218, 165, 32));
+            top: 20px;
+            left: 5px;
+        }
         #stem {
             position: absolute;
             width: 10px;
@@ -79,6 +98,9 @@
         <div id="leaf3" class="leaves"></div>
         <div id="leaf2" class="leaves"></div>
         <div id="leaf1" class="leaves"></div>
+    </div>
+    <div id="flower">
+        <div id="centre" class="flower"></div>
     </div>
     <div id="soil">
         <div id="dirt3" class="dirt"></div>

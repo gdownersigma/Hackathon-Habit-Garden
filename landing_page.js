@@ -24,7 +24,7 @@ form.addEventListener("submit", function(event) {
     // CHANGE: Update the URL to match your Flask API
     // CHANGE: The endpoint path might be different (e.g., "/users/get", "/login")
     // CHANGE: Might be GET instead of POST depending on how your teammate built it
-    fetch("http://127.0.0.1:5000/auth/login?username="+username, {
+    fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/auth/login?username="+username, {
         method: "GET",  // CHANGE: Might be "GET"
     })
     .then(function(response) {
@@ -75,7 +75,7 @@ createAccountBtn.addEventListener("click", function() {
     // --- API CALL: Create new user ---
     // CHANGE: Update the URL to match your Flask API
     // CHANGE: The endpoint path might be different (e.g., "/users/create", "/register")
-    fetch("http://127.0.0.1:5000/auth/register", {
+    fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

@@ -4,9 +4,31 @@ const addHabitBtn = document.getElementById("addHabitBtn");
 const habitNameInput = document.getElementById("habitNameInput");
 const frequencyInput = document.getElementById("frequencyInput");
 const submitHabitBtn = document.getElementById("submitHabitBtn");
+const datePicker = document.getElementById("datePicker");
+const submitLogBtn = document.getElementById("submitLogBtn");
+
+const logHabitBtn = document.getElementById("logHabitBtn");
+console.log("Log button element:", logHabitBtn);
+
+let currentHabitId = null;
+
+
+function showPlant(stage, habitName) {
+    const container = document.getElementById("plantContainer");
+    console.log("Stage value:", stage);
+    console.log("Plant path:", './plant/plant' + stage + '.html');
+    container.innerHTML = '<iframe src="./plant/plant' + stage + '.html" frameborder="0" scrolling="no" width="1400" height="650"></iframe>';
+    
+    const titleElement = document.getElementById("habitTitle");
+    if (habitName && titleElement) {
+        titleElement.textContent = habitName;
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     // Code here runs when page loads
-    fetch("http://127.0.0.1:5000/habit/"+userId, {
+    fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/"+userId, {
     method: "GET",
     })
     .then(function(response) {
@@ -20,8 +42,27 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("addHabitBtn").classList.remove("hidden");
         } else {
             document.getElementById("addHabitBtn").classList.add("hidden");
-            // TODO: Get stage and show flower
-            
+            document.getElementById("logHabitBtn").classList.remove("hidden");
+            const habit = data[0]; // Assuming one habit per user for simplicity
+            const habit_id = habit.habit_id;
+            const frequency = habit.frequency;
+            const habit_name = habit.habit_name;
+            currentHabitId = habit_id;
+
+            fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/score?user_id=" + userId + "&habit_id=" + habit_id + "&freq=" + frequency, {
+                method: "GET"
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(score) {
+                console.log("Score:", score.score);
+                showPlant(score.score, habit_name);
+            })
+            .catch(function(error) {
+                console.error("Error fetching score:", error);
+            });
+
         }
         // TODO: Check if empty or has habits
     })
@@ -50,7 +91,7 @@ submitHabitBtn.addEventListener("click", function() {
     }
     
     // API call to create habit
-    fetch("http://127.0.0.1:5000/habit/new", {
+    fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/new", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -82,3 +123,51 @@ submitHabitBtn.addEventListener("click", function() {
         alert("Something went wrong");
     });
 });
+
+logHabitBtn.addEventListener("click", function() {
+    const today = new Date().toISOString().split('T')[0];
+    datePicker.value = today;
+    datePicker.max = today;
+    console.log("Log Habit Button clicked!");
+    const logModal = new bootstrap.Modal(document.getElementById("logHabitModal"));
+    logModal.show();
+});
+console.log("Event listener attached");
+
+submitLogBtn.addEventListener("click", function() {
+    const selectedDate = datePicker.value;
+    const userId = sessionStorage.getItem("user_id");
+    if (!selectedDate) {
+        alert("Please select a date");
+        return;
+    }
+    
+    fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/log", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            habit_id: currentHabitId,
+            user_id: parseInt(userId),
+            date_practiced: selectedDate
+        })
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log("Logged:", data);
+        
+        const modal = bootstrap.Modal.getInstance(document.getElementById("logHabitModal"));
+        modal.hide();
+
+        location.reload();
+        
+    })
+    .catch(function(error) {
+        console.error("Error:", error);
+        alert("Something went wrong");
+    });
+});
+
