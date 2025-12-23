@@ -1,0 +1,103 @@
+/* Base structure */
+html, body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 30%, #a5d6a7 70%, #81c784 100%);
+    color: #2e5a3c;
+    min-height: 100vh;
+}
+
+.cover-container {
+    max-width: 42em;
+    justify-content: center;
+}
+
+/* Navigation styling */
+.nav-masthead .nav-link {
+    color: rgba(46, 90, 60, 0.6);
+    border-bottom: .25rem solid transparent;
+    font-weight: 500;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+    color: #2e5a3c;
+    border-bottom-color: rgba(46, 90, 60, 0.3);
+}
+
+.nav-masthead .active {
+    color: #2e5a3c;
+    border-bottom-color: #4a7c59;
+}
+
+/* Header branding */
+header h3 {
+    color: #3d6b4f;
+    font-weight: 600;
+}
+
+/* Main content */
+main h1 {
+    color: #2e5a3c;
+    font-weight: 600;
+}
+
+main .lead {
+    color: #4a7c59;
+}
+
+/* Username Form Styling */
+.form-signin {
+    max-width: 330px;
+    margin: 2rem auto;
+}
+
+.form-signin .form-control {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(74, 124, 89, 0.3);
+    color: #2e5a3c;
+}
+
+.form-signin .form-control:focus {
+    background-color: #fff;
+    border-color: #4a7c59;
+    box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+}
+
+.form-signin .form-floating label {
+    color: #5a8a6a;
+}
+
+/* Custom button */
+.btn-garden {
+    background-color: #4a7c59;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-garden:hover {
+    background-color: #3d6b4f;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+/* Header/footer spacing */
+header {
+    padding-top: 1rem;
+}
+
+footer {
+    padding-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #5a8a6a;
+}
+
+footer p {
+    margin: 0;
+}
