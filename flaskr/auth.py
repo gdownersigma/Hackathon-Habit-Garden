@@ -32,12 +32,15 @@ def register():
 @bp.route('/login', methods=('GET',))
 def login():
     if request.method == "GET":
-        payload = request.json
-        if not payload.get("username", False):
+        username = request.args.get("username", None)
+        if not username:
             return {"error": "No username received."}, 400
         db = get_db()
         user = db.execute(
             'SELECT user_id FROM user_info WHERE username = ?',
-            (payload.get("username"),)
+            (username,)
         ).fetchone()
-        return {"user_id": user["user_id"]}, 200
+        try:
+            return {"user_id": user["user_id"]}, 200
+        except TypeError:
+            return {"error": "Username not found."}, 404
