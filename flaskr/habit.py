@@ -58,7 +58,7 @@ def log_habit():
     return {"message": "success"}, 200
 
 
-@bp.route('/<int:user_id>')
+@bp.route('/<int:user_id>', methods=('GET',))
 def get_habits(user_id):
     db = get_db()
     habits = db.execute(

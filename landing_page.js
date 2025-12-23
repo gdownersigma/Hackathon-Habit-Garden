@@ -3,6 +3,7 @@ const form = document.querySelector("form");
 const createAccountBtn = document.getElementById("createAccount");
 const usernameInput = document.getElementById("floatingInput");
 
+
 // Store user_id globally so you can use it elsewhere
 let userId = null;
 
@@ -45,7 +46,9 @@ form.addEventListener("submit", function(event) {
             
             // Redirect to garden page
             // CHANGE: Update path to wherever your garden page is
-            window.location.href = "./landscape.html";
+            successModalBody.textContent = "Successfully logged in!";
+            const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+            successModal.show();
         } else {
             // User not found
             // CHANGE: Error message might be in data.error, data.message, etc.
@@ -93,10 +96,10 @@ createAccountBtn.addEventListener("click", function() {
             sessionStorage.setItem("username", username);
             
             console.log("Account created! User ID:", userId);
-            
-            // Redirect to garden page
-            // CHANGE: Update path to wherever your garden page is
-            window.location.href = "./landscape.html";
+            // Show success modal
+            successModalBody.textContent = "Account Created!";
+            const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+            successModal.show();
         } else {
             // Failed - maybe username already taken?
             // CHANGE: Check what error message your API returns
@@ -107,4 +110,5 @@ createAccountBtn.addEventListener("click", function() {
         console.error("Error:", error);
         alert("Something went wrong. Is the API running?");
     });
+
 });

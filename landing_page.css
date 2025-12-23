@@ -101,3 +101,15 @@ footer {
 footer p {
     margin: 0;
 }
+#successModal .modal-content {
+    background-color: #e8f5e9;
+    color: #2e5a3c;
+}
+
+#successModal .modal-header {
+    border-bottom: 1px solid rgba(74, 124, 89, 0.2);
+}
+
+#successModal .modal-footer {
+    border-top: 1px solid rgba(74, 124, 89, 0.2);
+}
