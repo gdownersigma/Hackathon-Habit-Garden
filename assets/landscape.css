@@ -259,3 +259,21 @@ html, body {
 .tree3 .canopy {
     animation-delay: 2s;
 }
+.tree4 {
+    left: 75%;
+    bottom: 23vh;
+    transform: scale(0.7);
+    z-index: 4;
+}
+.tree4 .canopy {
+    animation-delay: 3s;
+}
+.tree5 {
+    left: 30%;
+    bottom: 22vh;
+    transform: scale(0.6);
+    z-index: 2;
+}
+.tree5 .canopy {
+    animation-delay: 4s;
+}
