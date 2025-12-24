@@ -75,14 +75,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Show modal when "Add Habit" button is clicked
 addHabitBtn.addEventListener("click", function() {
     console.log("Button clicked!");
     const addHabitModal = new bootstrap.Modal(document.getElementById("addHabitModal"));
     addHabitModal.show();
 });
 
-// Submit the new habit
 submitHabitBtn.addEventListener("click", function() {
     const habitName = habitNameInput.value.trim();
     const frequency = frequencyInput.value;
@@ -113,14 +111,12 @@ submitHabitBtn.addEventListener("click", function() {
     .then(function(data) {
         console.log("Habit created:", data);
         
-        // Get habit_id from the response
         currentHabitId = data.habit_id;
         
         const modal = bootstrap.Modal.getInstance(document.getElementById("addHabitModal"));
         modal.hide();
         habitNameInput.value = "";
         
-        // Show the log button now that habit exists
         document.getElementById("addHabitBtn").classList.add("hidden");
         document.getElementById("logHabitBtn").classList.remove("hidden");
         
