@@ -6,12 +6,19 @@ const frequencyInput = document.getElementById("frequencyInput");
 const submitHabitBtn = document.getElementById("submitHabitBtn");
 const datePicker = document.getElementById("datePicker");
 const submitLogBtn = document.getElementById("submitLogBtn");
+const bgMusic = document.getElementById("bgMusic");
 
 const logHabitBtn = document.getElementById("logHabitBtn");
 console.log("Log button element:", logHabitBtn);
 
 let currentHabitId = null;
+let currentFrequency = null;
+let currentHabitName = null;
 
+bgMusic.volume = 0.2;
+bgMusic.play().catch(function(error) {
+    console.error("Error playing background music:", error);
+});
 
 function showPlant(stage, habitName) {
     const container = document.getElementById("plantContainer");
@@ -25,31 +32,30 @@ function showPlant(stage, habitName) {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Code here runs when page loads
     fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/"+userId, {
-    method: "GET",
+        method: "GET",
     })
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        console.log("Habits responnnse:", data);
+        console.log("Habits response:", data);
         console.log("Habits length:", data.length);
         if (data.length === 0) {
-        // Show the Add Habit button
             document.getElementById("addHabitBtn").classList.remove("hidden");
         } else {
             document.getElementById("addHabitBtn").classList.add("hidden");
             document.getElementById("logHabitBtn").classList.remove("hidden");
-            const habit = data[0]; // Assuming one habit per user for simplicity
+            const habit = data[0];
             const habit_id = habit.habit_id;
             const frequency = habit.frequency;
             const habit_name = habit.habit_name;
             currentHabitId = habit_id;
+            currentFrequency = frequency;
+            currentHabitName = habit_name;
 
-            fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/score?user_id=" + userId + "&habit_id=" + habit_id + "&freq=" + frequency, {
+            fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/score?user_id=" + userId + "&habit_id=" + currentHabitId + "&freq=" + currentFrequency, {
                 method: "GET"
             })
             .then(function(response) {
@@ -62,14 +68,12 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(function(error) {
                 console.error("Error fetching score:", error);
             });
-
         }
-        // TODO: Check if empty or has habits
     })
     .catch(function(error) {
         console.error("Error:", error);
     });
- });
+});
 
 // Show modal when "Add Habit" button is clicked
 addHabitBtn.addEventListener("click", function() {
@@ -84,13 +88,14 @@ submitHabitBtn.addEventListener("click", function() {
     const frequency = frequencyInput.value;
     const userId = sessionStorage.getItem("user_id");
     
-    // Check if name is empty
+    currentFrequency = parseInt(frequency);
+    currentHabitName = habitName;
+    
     if (!habitName) {
         alert("Please enter a habit name");
         return;
     }
     
-    // API call to create habit
     fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/new", {
         method: "POST",
         headers: {
@@ -108,15 +113,26 @@ submitHabitBtn.addEventListener("click", function() {
     .then(function(data) {
         console.log("Habit created:", data);
         
-        // Close the modal
+        // Get habit_id from the response
+        currentHabitId = data.habit_id;
+        
         const modal = bootstrap.Modal.getInstance(document.getElementById("addHabitModal"));
         modal.hide();
-        
-        // Clear the form
         habitNameInput.value = "";
         
-        // TODO: Refresh habits / show the flower
-        location.reload();
+        // Show the log button now that habit exists
+        document.getElementById("addHabitBtn").classList.add("hidden");
+        document.getElementById("logHabitBtn").classList.remove("hidden");
+        
+        fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/score?user_id=" + userId + "&habit_id=" + currentHabitId + "&freq=" + currentFrequency, {
+            method: "GET"
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(score) {
+            showPlant(score.score, currentHabitName);
+        });
     })
     .catch(function(error) {
         console.error("Error:", error);
@@ -137,6 +153,7 @@ console.log("Event listener attached");
 submitLogBtn.addEventListener("click", function() {
     const selectedDate = datePicker.value;
     const userId = sessionStorage.getItem("user_id");
+    
     if (!selectedDate) {
         alert("Please select a date");
         return;
@@ -161,18 +178,26 @@ submitLogBtn.addEventListener("click", function() {
         
         const modal = bootstrap.Modal.getInstance(document.getElementById("logHabitModal"));
         modal.hide();
+        document.getElementById("successSound").play();
 
-        location.reload();
-        
+        fetch("https://sigmalabshackathonteam7.eu.pythonanywhere.com/habit/score?user_id=" + userId + "&habit_id=" + currentHabitId + "&freq=" + currentFrequency, {
+            method: "GET"
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(score) {
+            showPlant(score.score, currentHabitName);
+        });
     })
     .catch(function(error) {
         console.error("Error:", error);
         alert("Something went wrong");
     });
-
 });
-    document.getElementById("logoutBtn").addEventListener("click", function() {
-        console.log("Logout clicked!");
-        sessionStorage.clear();
-        window.location.href = "../index.html";  // Or your landing page path
+
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    console.log("Logout clicked!");
+    sessionStorage.clear();
+    window.location.href = "../index.html";
 });
