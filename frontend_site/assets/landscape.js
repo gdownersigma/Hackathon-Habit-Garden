@@ -169,5 +169,10 @@ submitLogBtn.addEventListener("click", function() {
         console.error("Error:", error);
         alert("Something went wrong");
     });
-});
 
+});
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+        console.log("Logout clicked!");
+        sessionStorage.clear();
+        window.location.href = "../index.html";  // Or your landing page path
+});

@@ -572,3 +572,22 @@ html, body {
 #logHabitModal .btn-success:hover {
     background: #3d6b4f;
 }
+#logoutBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.85);
+    color: #2e5a3c;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+#logoutBtn:hover {
+    background: white;
+}
